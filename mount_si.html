@@ -1,0 +1,177 @@
+<html>
+    <head>
+        <title>Mount Si</title>
+
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin=""/>
+
+        <style type="text/css">
+            body {
+                font-family: sans-serif;
+                padding: 0;
+                margin: 0;
+                background-color: white;
+            }
+            
+            section {
+                margin: 1em;
+            }
+
+            .divider {
+                height: 1px;
+                background-color: black;
+                margin: 0 1em 0 1em;
+            }
+
+            .row{
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+            }
+
+            .col-right{
+                text-align: right;
+            }
+
+            .warning{
+                background-color: orange;
+                padding: 1em;
+                margin: 2em 0em 2em 0em;
+            }
+
+            .warning-content{
+                margin: 0;
+                font-weight: normal;
+                color: black;
+            }
+
+            #warning-main{
+                color: black;
+                font-weight: bold;
+                margin-bottom: 0.5em;
+            }
+
+            #mapId {
+                height: 400px;
+            }
+
+            #title{
+                padding: 2em 0;
+            }
+
+            h1{
+                font-size: 36pt;
+                margin: 0;
+                color: navy;
+                /* background-color: yellow; */
+            }
+
+            h5{
+                color: grey;
+                /* background-color: red; */
+            }
+
+            h4{
+                margin: 0;
+            }
+
+            h3{
+                font-weight: normal;
+                font-size: 18pt;
+                margin: 0.3em 0 0.3em 0;
+                /* background-color: green; */
+            }
+
+            p {
+                font-size: 10pt;
+            }
+        </style>
+
+
+    </head>
+    <body>
+        <section id="Title">
+            <h1>Mount Si</h1>
+            <h4>Snoqualmie Region -- North Bend Area</h4>
+        </section>
+        <div class="divider"></div>
+        <section id="Weather">
+            <h5>Weather Conditions</h5>
+            <h3>33°F → 37°F</h3>
+            <h3>Light Rain → Heavy Rain</h3>
+            <p><strong>Wind: 15mph | Sunset: 5:22PM</strong></p>
+            <p>Showers picking up to heavy rain in evening</p>
+            <div class="warning">
+                <h4 id = "warning-main" class="warning-content">Parts of this trail are covered by snow</h4>
+                <p class="warning-content">Wear microspikes or high-traction footwear</p>
+                
+            </div>
+        </section>
+        <div class="divider"></div>
+        <section id="Hike">
+            <h5>Hike Overview</h5>
+            <div class="row">
+                <div class="col-left">
+                    <h3>8.0mi</h3>
+                    <p>Roundtrip</p>
+                </div>
+                <div class="col-right">
+                    <h3>Hard</h3>
+                    <p>Difficulty Rating</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-left">
+                    <h3>3,150ft</h3>
+                    <p>Elevation Gained</p>
+                </div>
+                <div class="col-right">
+                    <h3>6.5hr</h3>
+                    <p>Average Hike Time</p>
+                </div>
+            </div>
+        </section>
+        <div class="divider"></div>
+        <section id="Map">
+            <h5>Map and Elevation Profile</h5>
+            <div id="mapId"></div>
+        </section>
+        <div class="divider"></div>
+        <section id="Alternatives">
+            <h5>Nearby Alternatives</h5>
+            <div class="alts"></div>
+        </section>
+        <!-- <footer>
+            <p>Report an Emergrency</p>
+        </footer> -->
+
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.min.js"></script>
+        <script type="text/javascript">
+
+            var map = L.map('mapId').setView([47.4964, -121.7297], 14);
+
+            L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                scrollWheelZoom: false
+            }).addTo(map);
+            
+            var myStyle = {
+                "color": "#ff0000",
+                "weight": 3,
+                "opacity": 0.65
+            }; 
+
+            var geojsonLayer = new L.GeoJSON.AJAX("mountsi.geojson",{ style: myStyle });  
+
+            geojsonLayer.addTo(map);
+
+            trailheadMarker = L.marker([47.4880076, -121.7231554],{title: 'Mount Si Trailhead'}).addTo(map);
+            trailheadMarker.bindPopup("Mount Si Trailhead").openPopup();
+
+        </script>
+    </body>
+</html>
